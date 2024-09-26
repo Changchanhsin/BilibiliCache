@@ -34,6 +34,7 @@
             pgbProgress.Maximum += folders.Count - 1
             For Each folder In folders
                 i = lvwItems.Items.Add(folder.FullName)
+                i.StateImageIndex = 0
                 i.SubItems.Add(GetItemTitle(folder.FullName))
                 i.SubItems.Add(folders.Count)
                 i.SubItems.Add(GetItemSubTitle(folder.FullName))
@@ -75,31 +76,44 @@
         pgbProgress.Visible = True
         lblProgress.Text = "Creating batch file..."
 
-
-        Dim file = New IO.StreamWriter(cboSource.Text & "run.bat", False, System.Text.Encoding.UTF8)
+        lvwItems.Visible = False
+        Dim file = New IO.StreamWriter(cboSource.Text & "\run.bat", False, System.Text.Encoding.UTF8)
         file.Write(vbCrLf & "chcp 65001" & vbCrLf & vbCrLf)
         For Each i In lvwItems.Items
             If i.SubItems(4).Text = "blv" Then
-                file.Write(ConvertBLV(i.SubItems(0).Text, i.SubItems(3).Text))
+                file.Write(ConvertBLV(i.SubItems(0).Text, i.SubItems(3).Text, i.StateImageIndex))
             End If
             If i.SubItems(4).Text = "m4s" Then
-                file.Write(ConvertM4S(i.SubItems(0).Text, i.SubItems(3).Text))
+                file.Write(ConvertM4S(i.SubItems(0).Text, i.SubItems(3).Text, i.StateImageIndex))
             End If
             pgbProgress.Value = count
             count += 1
             Application.DoEvents()
         Next
         file.Close()
+        lvwItems.Visible = True
         pgbProgress.Visible = False
         lblProgress.Text = "Total " & count & " files."
     End Sub
 
-    Function ConvertBLV(sPath As String, sOutputTitle As String) As String
+    Function ConvertBLV(sPath As String, sOutputTitle As String, fType As Integer) As String
         Try
             ConvertBLV = ""
             Dim folder As IO.DirectoryInfo
             Dim i As Integer
             Dim j As Integer
+            Dim paramCopy As String
+            Dim paramToMP3 As String
+            If chkCopyStream.Checked = True Then
+                paramCopy = "-c copy "
+            Else
+                paramCopy = ""
+            End If
+            If chkToMp3.Checked = True Then
+                paramToMP3 = ".mp3"
+            Else
+                paramToMP3 = ".m4a"
+            End If
 
             Dim root = New IO.DirectoryInfo(sPath)
             Dim folders = root.GetDirectories()
@@ -120,9 +134,16 @@
             Next
             sOutputTitle = sOutputTitle.Replace("?", "_")
             'If j = 0 Then
-            ConvertBLV = ConvertBLV & "ffmpeg -f concat -safe 0 -i files.txt -c copy """ & sOutputTitle & ".mp4""" & vbCrLf
-            If hasRedundantMusic.Checked = True Then
-                ConvertBLV = ConvertBLV & "ffmpeg -i """ & sOutputTitle & ".mp4"" -vn -y -acodec copy """ & sOutputTitle & ".m4a""" & vbCrLf
+
+            If fType = 0 Then ' VIDEO and VOICE
+                ConvertBLV = ConvertBLV & "ffmpeg -f concat -safe 0 -i files.txt " & paramCopy & """" & sOutputTitle & ".mp4""" & vbCrLf
+                ConvertBLV = ConvertBLV & "ffmpeg -i """ & sOutputTitle & ".mp4"" -vn -y """ & sOutputTitle & paramToMP3 & """" & vbCrLf
+            End If
+            If fType = 1 Then ' VIDEO only
+                ConvertBLV = ConvertBLV & "ffmpeg -f concat -safe 0 -i files.txt " & paramCopy & """" & sOutputTitle & ".mp4""" & vbCrLf
+            End If
+            If fType = 2 Then ' VOICE only
+                ConvertBLV = ConvertBLV & "ffmpeg -f concat -safe 0 -i files.txt """ & sOutputTitle & paramToMP3 & """ -vn -y " & vbCrLf
             End If
             ConvertBLV &= vbCrLf
         Catch ex As Exception
@@ -130,11 +151,26 @@
         End Try
     End Function
 
-    Function ConvertM4S(sPath As String, sOutputTitle As String) As String
+    Function ConvertM4S(sPath As String, sOutputTitle As String, fType As Integer) As String
         Try
             ConvertM4S = ""
             Dim folder As IO.DirectoryInfo
             Dim j As Integer
+            Dim paramCodec As String
+            Dim paramToMP3 As String
+            Dim paramAcodec As String
+            If chkCopyStream.Checked = True Then
+                paramCodec = "-codec copy "
+            Else
+                paramCodec = ""
+            End If
+            If chkToMp3.Checked = True Then
+                paramToMP3 = ".mp3"
+                paramAcodec = ""
+            Else
+                paramToMP3 = ".m4a"
+                paramAcodec = "-acodec copy "
+            End If
 
             Dim root = New IO.DirectoryInfo(sPath)
             Dim folders = root.GetDirectories()
@@ -143,12 +179,23 @@
                 sOutputTitle = sOutputTitle.Replace(iChar, "_")
             Next
 
-            For Each folder In folders
-                ConvertM4S = ConvertM4S & "ffmpeg.exe -i """ & folder.FullName & "\video.m4s"" -i """ & folder.FullName & "\audio.m4s"" -codec copy """ & sOutputTitle & ".mp4""" & vbCrLf
-            Next
-            If hasRedundantMusic.Checked = True Then
-                ConvertM4S = ConvertM4S & "ffmpeg -i """ & sOutputTitle & ".mp4"" -vn -y -acodec copy """ & sOutputTitle & ".m4a""" & vbCrLf
+            If fType = 0 Then ' VIDEO and VOICE
+                For Each folder In folders
+                    ConvertM4S = ConvertM4S & "ffmpeg.exe -i """ & folder.FullName & "\video.m4s"" -i """ & folder.FullName & "\audio.m4s"" " & paramCodec & """" & sOutputTitle & ".mp4""" & vbCrLf
+                Next
+                ConvertM4S = ConvertM4S & "ffmpeg -i """ & sOutputTitle & ".mp4"" -vn -y " & paramAcodec & """" & sOutputTitle & paramToMP3 & """" & vbCrLf
             End If
+            If fType = 1 Then ' VIDEO only
+                For Each folder In folders
+                    ConvertM4S = ConvertM4S & "ffmpeg.exe -i """ & folder.FullName & "\video.m4s"" -i """ & folder.FullName & "\audio.m4s"" " & paramCodec & """" & sOutputTitle & ".mp4""" & vbCrLf
+                Next
+            End If
+            If fType = 2 Then ' VOICE only
+                For Each folder In folders
+                    ConvertM4S = ConvertM4S & "ffmpeg.exe -i """ & folder.FullName & "\audio.m4s"" " & paramAcodec & """" & sOutputTitle & paramToMP3 & """" & vbCrLf
+                Next
+            End If
+
             ConvertM4S &= vbCrLf
         Catch ex As Exception
             ConvertM4S = ""
@@ -222,4 +269,13 @@
         End Try
     End Function
 
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        cboSource.Text = Application.StartupPath
+    End Sub
+
+    Private Sub lvwItems_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles lvwItems.MouseDoubleClick
+        For Each i In lvwItems.SelectedItems
+            i.StateImageIndex = (i.StateImageIndex + 1) Mod 4
+        Next
+    End Sub
 End Class
