@@ -278,4 +278,63 @@
             i.StateImageIndex = (i.StateImageIndex + 1) Mod 4
         Next
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnRun.Click
+        Dim i As ListViewItem
+        Dim count As Integer
+        Dim a
+
+        count = 0
+        pgbProgress.Maximum = lvwItems.Items.Count
+        pgbProgress.Style = ProgressBarStyle.Continuous
+        pgbProgress.Value = 0
+        pgbProgress.Visible = True
+        lblProgress.Text = "Run..."
+
+        btnConvert.Enabled = False
+        btnRun.Enabled = False
+        chkCopyStream.Enabled = False
+        chkToMp3.Enabled = False
+        hasDanmaku.Enabled = False
+
+        For Each i In lvwItems.Items
+            i.BackColor = Color.White
+        Next
+        For Each i In lvwItems.Items
+            count += 1
+            pgbProgress.Value = count
+            lblProgress.Text = "Run..." & i.SubItems(1).Text
+            Application.DoEvents()
+            If i.SubItems(4).Text = "blv" Then
+                a = Split(ConvertBLV(i.SubItems(0).Text, i.SubItems(3).Text, i.StateImageIndex), vbCrLf)
+                For Each s In a
+                    If s <> "" Then
+                        Shell("cmd " & s, vbHide, True)
+                        lblProgress.Text = lblProgress.Text & "."
+                        Application.DoEvents()
+                    End If
+                Next
+            End If
+            If i.SubItems(4).Text = "m4s" Then
+                a = Split(ConvertM4S(i.SubItems(0).Text, i.SubItems(3).Text, i.StateImageIndex), vbCrLf)
+                For Each s In a
+                    If s <> "" Then
+                        Shell("" & s, vbMinimizedNoFocus, True)
+                        lblProgress.Text = lblProgress.Text & "."
+                        Application.DoEvents()
+                    End If
+                Next
+            End If
+            i.BackColor = Color.LightBlue
+            Application.DoEvents()
+        Next
+
+        btnConvert.Enabled = True
+        btnRun.Enabled = True
+        chkCopyStream.Enabled = True
+        chkToMp3.Enabled = True
+        hasDanmaku.Enabled = True
+        pgbProgress.Visible = False
+        lblProgress.Text = "Total " & count & " files."
+    End Sub
 End Class

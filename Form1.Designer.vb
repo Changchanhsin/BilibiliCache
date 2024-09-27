@@ -45,6 +45,7 @@ Partial Class Form1
         Me.lblProgress = New System.Windows.Forms.ToolStripStatusLabel()
         Me.chkCopyStream = New System.Windows.Forms.CheckBox()
         Me.chkToMp3 = New System.Windows.Forms.CheckBox()
+        Me.btnRun = New System.Windows.Forms.Button()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -242,11 +243,23 @@ Partial Class Form1
         Me.chkToMp3.Text = "To MP3"
         Me.chkToMp3.UseVisualStyleBackColor = True
         '
+        'btnRun
+        '
+        Me.btnRun.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnRun.Location = New System.Drawing.Point(614, 172)
+        Me.btnRun.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.btnRun.Name = "btnRun"
+        Me.btnRun.Size = New System.Drawing.Size(79, 25)
+        Me.btnRun.TabIndex = 12
+        Me.btnRun.Text = "RUN"
+        Me.btnRun.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(863, 255)
+        Me.Controls.Add(Me.btnRun)
         Me.Controls.Add(Me.chkToMp3)
         Me.Controls.Add(Me.chkCopyStream)
         Me.Controls.Add(Me.StatusStrip1)
@@ -291,4 +304,5 @@ Partial Class Form1
     Friend WithEvents chkCopyStream As CheckBox
     Friend WithEvents chkToMp3 As CheckBox
     Friend WithEvents ImageList1 As ImageList
+    Friend WithEvents btnRun As Button
 End Class
