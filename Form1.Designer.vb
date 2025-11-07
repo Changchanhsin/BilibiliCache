@@ -45,16 +45,17 @@ Partial Class Form1
         Me.lblProgress = New System.Windows.Forms.ToolStripStatusLabel()
         Me.chkCopyStream = New System.Windows.Forms.CheckBox()
         Me.chkToMp3 = New System.Windows.Forms.CheckBox()
-        Me.btnRun = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.chkCopyCover = New System.Windows.Forms.CheckBox()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'lblSource
         '
         Me.lblSource.AutoSize = True
-        Me.lblSource.Location = New System.Drawing.Point(8, 12)
+        Me.lblSource.Location = New System.Drawing.Point(9, 15)
         Me.lblSource.Name = "lblSource"
-        Me.lblSource.Size = New System.Drawing.Size(63, 15)
+        Me.lblSource.Size = New System.Drawing.Size(71, 18)
         Me.lblSource.TabIndex = 0
         Me.lblSource.Text = "Source:"
         '
@@ -63,20 +64,18 @@ Partial Class Form1
         Me.cboSource.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cboSource.FormattingEnabled = True
-        Me.cboSource.Location = New System.Drawing.Point(75, 10)
-        Me.cboSource.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.cboSource.Location = New System.Drawing.Point(84, 12)
         Me.cboSource.Name = "cboSource"
-        Me.cboSource.Size = New System.Drawing.Size(706, 23)
+        Me.cboSource.Size = New System.Drawing.Size(1412, 26)
         Me.cboSource.TabIndex = 1
         Me.cboSource.Text = "W:\视频\new\"
         '
         'btnCheck
         '
         Me.btnCheck.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCheck.Location = New System.Drawing.Point(783, 8)
-        Me.btnCheck.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.btnCheck.Location = New System.Drawing.Point(1500, 9)
         Me.btnCheck.Name = "btnCheck"
-        Me.btnCheck.Size = New System.Drawing.Size(72, 25)
+        Me.btnCheck.Size = New System.Drawing.Size(81, 30)
         Me.btnCheck.TabIndex = 2
         Me.btnCheck.Text = "Check"
         Me.btnCheck.UseVisualStyleBackColor = True
@@ -91,10 +90,9 @@ Partial Class Form1
         Me.lvwItems.GridLines = True
         Me.lvwItems.HideSelection = False
         Me.lvwItems.LabelWrap = False
-        Me.lvwItems.Location = New System.Drawing.Point(75, 35)
-        Me.lvwItems.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.lvwItems.Location = New System.Drawing.Point(84, 42)
         Me.lvwItems.Name = "lvwItems"
-        Me.lvwItems.Size = New System.Drawing.Size(782, 132)
+        Me.lvwItems.Size = New System.Drawing.Size(1498, 990)
         Me.lvwItems.Sorting = System.Windows.Forms.SortOrder.Ascending
         Me.lvwItems.StateImageList = Me.ImageList1
         Me.lvwItems.TabIndex = 3
@@ -135,15 +133,13 @@ Partial Class Form1
         Me.ImageList1.Images.SetKeyName(0, "ava-24.png")
         Me.ImageList1.Images.SetKeyName(1, "av-24.png")
         Me.ImageList1.Images.SetKeyName(2, "audio-24.png")
-        Me.ImageList1.Images.SetKeyName(3, "unselected-24.png")
         '
         'btnConvert
         '
         Me.btnConvert.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnConvert.Location = New System.Drawing.Point(699, 172)
-        Me.btnConvert.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.btnConvert.Location = New System.Drawing.Point(1402, 1035)
         Me.btnConvert.Name = "btnConvert"
-        Me.btnConvert.Size = New System.Drawing.Size(159, 25)
+        Me.btnConvert.Size = New System.Drawing.Size(178, 30)
         Me.btnConvert.TabIndex = 4
         Me.btnConvert.Text = "Make run.bat"
         Me.btnConvert.UseVisualStyleBackColor = True
@@ -151,10 +147,9 @@ Partial Class Form1
         'btnExit
         '
         Me.btnExit.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnExit.Location = New System.Drawing.Point(785, 201)
-        Me.btnExit.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.btnExit.Location = New System.Drawing.Point(1500, 1070)
         Me.btnExit.Name = "btnExit"
-        Me.btnExit.Size = New System.Drawing.Size(72, 25)
+        Me.btnExit.Size = New System.Drawing.Size(81, 30)
         Me.btnExit.TabIndex = 5
         Me.btnExit.Text = "Exit"
         Me.btnExit.UseVisualStyleBackColor = True
@@ -165,10 +160,9 @@ Partial Class Form1
         Me.hasDanmaku.AutoSize = True
         Me.hasDanmaku.Checked = True
         Me.hasDanmaku.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.hasDanmaku.Location = New System.Drawing.Point(281, 176)
-        Me.hasDanmaku.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.hasDanmaku.Location = New System.Drawing.Point(321, 1042)
         Me.hasDanmaku.Name = "hasDanmaku"
-        Me.hasDanmaku.Size = New System.Drawing.Size(85, 19)
+        Me.hasDanmaku.Size = New System.Drawing.Size(97, 22)
         Me.hasDanmaku.TabIndex = 6
         Me.hasDanmaku.Text = "Danmaku"
         Me.hasDanmaku.UseVisualStyleBackColor = True
@@ -178,10 +172,9 @@ Partial Class Form1
         Me.isDeleteSourceFile.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.isDeleteSourceFile.AutoSize = True
         Me.isDeleteSourceFile.Enabled = False
-        Me.isDeleteSourceFile.Location = New System.Drawing.Point(372, 176)
-        Me.isDeleteSourceFile.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.isDeleteSourceFile.Location = New System.Drawing.Point(426, 1043)
         Me.isDeleteSourceFile.Name = "isDeleteSourceFile"
-        Me.isDeleteSourceFile.Size = New System.Drawing.Size(173, 19)
+        Me.isDeleteSourceFile.Size = New System.Drawing.Size(196, 22)
         Me.isDeleteSourceFile.TabIndex = 7
         Me.isDeleteSourceFile.Text = "Delete source file"
         Me.isDeleteSourceFile.UseVisualStyleBackColor = True
@@ -189,9 +182,9 @@ Partial Class Form1
         'lblItems
         '
         Me.lblItems.AutoSize = True
-        Me.lblItems.Location = New System.Drawing.Point(8, 35)
+        Me.lblItems.Location = New System.Drawing.Point(9, 42)
         Me.lblItems.Name = "lblItems"
-        Me.lblItems.Size = New System.Drawing.Size(55, 15)
+        Me.lblItems.Size = New System.Drawing.Size(62, 18)
         Me.lblItems.TabIndex = 8
         Me.lblItems.Text = "items:"
         '
@@ -199,32 +192,31 @@ Partial Class Form1
         '
         Me.StatusStrip1.ImageScalingSize = New System.Drawing.Size(32, 32)
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.pgbProgress, Me.lblProgress})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 233)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 1109)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(0, 0, 9, 0)
-        Me.StatusStrip1.Size = New System.Drawing.Size(863, 22)
+        Me.StatusStrip1.Padding = New System.Windows.Forms.Padding(0, 0, 10, 0)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1590, 22)
         Me.StatusStrip1.TabIndex = 10
         Me.StatusStrip1.Text = "StatusStrip1"
         '
         'pgbProgress
         '
         Me.pgbProgress.Name = "pgbProgress"
-        Me.pgbProgress.Size = New System.Drawing.Size(67, 18)
+        Me.pgbProgress.Size = New System.Drawing.Size(75, 21)
         Me.pgbProgress.Visible = False
         '
         'lblProgress
         '
         Me.lblProgress.Name = "lblProgress"
-        Me.lblProgress.Size = New System.Drawing.Size(0, 16)
+        Me.lblProgress.Size = New System.Drawing.Size(0, 15)
         '
         'chkCopyStream
         '
         Me.chkCopyStream.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.chkCopyStream.AutoSize = True
-        Me.chkCopyStream.Location = New System.Drawing.Point(75, 176)
-        Me.chkCopyStream.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.chkCopyStream.Location = New System.Drawing.Point(84, 1043)
         Me.chkCopyStream.Name = "chkCopyStream"
-        Me.chkCopyStream.Size = New System.Drawing.Size(117, 19)
+        Me.chkCopyStream.Size = New System.Drawing.Size(133, 22)
         Me.chkCopyStream.TabIndex = 11
         Me.chkCopyStream.Text = "Copy stream"
         Me.chkCopyStream.UseVisualStyleBackColor = True
@@ -235,31 +227,43 @@ Partial Class Form1
         Me.chkToMp3.AutoSize = True
         Me.chkToMp3.Checked = True
         Me.chkToMp3.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkToMp3.Location = New System.Drawing.Point(198, 176)
-        Me.chkToMp3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.chkToMp3.Location = New System.Drawing.Point(225, 1043)
         Me.chkToMp3.Name = "chkToMp3"
-        Me.chkToMp3.Size = New System.Drawing.Size(77, 19)
+        Me.chkToMp3.Size = New System.Drawing.Size(88, 22)
         Me.chkToMp3.TabIndex = 11
         Me.chkToMp3.Text = "To MP3"
         Me.chkToMp3.UseVisualStyleBackColor = True
         '
-        'btnRun
+        'Button1
         '
-        Me.btnRun.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnRun.Location = New System.Drawing.Point(614, 172)
-        Me.btnRun.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.btnRun.Name = "btnRun"
-        Me.btnRun.Size = New System.Drawing.Size(79, 25)
-        Me.btnRun.TabIndex = 12
-        Me.btnRun.Text = "RUN"
-        Me.btnRun.UseVisualStyleBackColor = True
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(1314, 1035)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(82, 30)
+        Me.Button1.TabIndex = 12
+        Me.Button1.Text = "RUN"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'chkCopyCover
+        '
+        Me.chkCopyCover.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.chkCopyCover.AutoSize = True
+        Me.chkCopyCover.Checked = True
+        Me.chkCopyCover.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkCopyCover.Location = New System.Drawing.Point(628, 1043)
+        Me.chkCopyCover.Name = "chkCopyCover"
+        Me.chkCopyCover.Size = New System.Drawing.Size(124, 22)
+        Me.chkCopyCover.TabIndex = 13
+        Me.chkCopyCover.Text = "Copy cover"
+        Me.chkCopyCover.UseVisualStyleBackColor = True
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 18.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(863, 255)
-        Me.Controls.Add(Me.btnRun)
+        Me.ClientSize = New System.Drawing.Size(1590, 1131)
+        Me.Controls.Add(Me.chkCopyCover)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.chkToMp3)
         Me.Controls.Add(Me.chkCopyStream)
         Me.Controls.Add(Me.StatusStrip1)
@@ -272,8 +276,6 @@ Partial Class Form1
         Me.Controls.Add(Me.btnCheck)
         Me.Controls.Add(Me.cboSource)
         Me.Controls.Add(Me.lblSource)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "Form1"
         Me.Text = "bilibili Cache"
         Me.StatusStrip1.ResumeLayout(False)
@@ -304,5 +306,6 @@ Partial Class Form1
     Friend WithEvents chkCopyStream As CheckBox
     Friend WithEvents chkToMp3 As CheckBox
     Friend WithEvents ImageList1 As ImageList
-    Friend WithEvents btnRun As Button
+    Friend WithEvents Button1 As Button
+    Friend WithEvents chkCopyCover As CheckBox
 End Class

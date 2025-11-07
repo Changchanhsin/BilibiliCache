@@ -145,6 +145,10 @@
             If fType = 2 Then ' VOICE only
                 ConvertBLV = ConvertBLV & "ffmpeg -f concat -safe 0 -i files.txt """ & sOutputTitle & paramToMP3 & """ -vn -y " & vbCrLf
             End If
+
+            If hasDanmaku.Checked = True Then
+                ConvertBLV = ConvertBLV & "copy """ & root.FullName & "\danmaku.xml"" """ & root.Parent.Parent.FullName & "\" & sOutputTitle & ".danmaku.xml""" & vbCrLf
+            End If
             ConvertBLV &= vbCrLf
         Catch ex As Exception
             ConvertBLV = ""
@@ -196,6 +200,14 @@
                 Next
             End If
 
+            If chkCopyCover.Checked = True Then
+                ConvertM4S = ConvertM4S & "copy """ & root.FullName & "\cover.jpg"" """ & root.Parent.Parent.FullName & "\" & sOutputTitle & ".jpg""" & vbCrLf
+            End If
+
+            If hasDanmaku.Checked = True Then
+                ConvertM4S = ConvertM4S & "copy """ & root.FullName & "\danmaku.xml"" """ & root.Parent.Parent.FullName & "\" & sOutputTitle & ".danmaku.xml""" & vbCrLf
+            End If
+
             ConvertM4S &= vbCrLf
         Catch ex As Exception
             ConvertM4S = ""
@@ -240,7 +252,23 @@
             Dim Str = file.ReadToEnd()
             GetItemSubTitle = GetSubString(Str, """download_subtitle"":""", """")
             If GetItemSubTitle = "" Then
-                GetItemSubTitle = GetSubString(Str, """title"":""", """") & "-" & GetSubString(Str, """index"":""", """") & "-" & GetSubString(Str, """index_title"":""", """") & "-" & GetSubString(Str, """part"":""", """")
+                Dim title = GetSubString(Str, """title"":""", """")
+                Dim index = GetSubString(Str, """index"":""", """")
+                Dim index_title = GetSubString(Str, """index_title"":""", """")
+                Dim part = GetSubString(Str, """part"":""", """")
+                If title = part Then
+                    part = ""
+                End If
+                If index <> "" Then
+                    index = "-" & index
+                End If
+                If index_title <> "" Then
+                    index_title = "-" & index_title
+                End If
+                If part <> "" Then
+                    part = "-" & part
+                End If
+                GetItemSubTitle = title & index & index_title & part
             End If
             file.Close()
         Catch
@@ -275,11 +303,11 @@
 
     Private Sub lvwItems_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles lvwItems.MouseDoubleClick
         For Each i In lvwItems.SelectedItems
-            i.StateImageIndex = (i.StateImageIndex + 1) Mod 4
+            i.StateImageIndex = (i.StateImageIndex + 1) Mod 3
         Next
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnRun.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim i As ListViewItem
         Dim count As Integer
         Dim a
@@ -291,15 +319,7 @@
         pgbProgress.Visible = True
         lblProgress.Text = "Run..."
 
-        btnConvert.Enabled = False
-        btnRun.Enabled = False
-        chkCopyStream.Enabled = False
-        chkToMp3.Enabled = False
-        hasDanmaku.Enabled = False
-
-        For Each i In lvwItems.Items
-            i.BackColor = Color.White
-        Next
+        lvwItems.Visible = False
         For Each i In lvwItems.Items
             count += 1
             pgbProgress.Value = count
@@ -325,15 +345,9 @@
                     End If
                 Next
             End If
-            i.BackColor = Color.LightBlue
             Application.DoEvents()
         Next
-
-        btnConvert.Enabled = True
-        btnRun.Enabled = True
-        chkCopyStream.Enabled = True
-        chkToMp3.Enabled = True
-        hasDanmaku.Enabled = True
+        lvwItems.Visible = True
         pgbProgress.Visible = False
         lblProgress.Text = "Total " & count & " files."
     End Sub
